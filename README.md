@@ -236,7 +236,7 @@ This project follows the assignment requirements:
 
 ## 👨‍💻 Author
 
-**Student:** *Your Name*
+**Student:** Bui Phuoc Trong
 
 **Course:** CSD202 – Data Structures and Algorithms
 
