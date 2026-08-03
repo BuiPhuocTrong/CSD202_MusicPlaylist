@@ -5,7 +5,6 @@
 
 #include <iostream>
 #include <iomanip>
-#include <conio.h>   // Thư viện lấy phím thời gian thực (_getch)
 #include <algorithm> // Cho transform (chuyển chữ hoa/thường nếu cần)
 
 using namespace std;
@@ -218,8 +217,7 @@ void PlaylistManagement::deleteIndex(int size)
 }
 
 // Search by Song ID
-Node* PlaylistManagement::searchById()
-{
+Node* PlaylistManagement::searchById() const{
     string id = inputString("Song ID: ");
     Node* current = head;
 

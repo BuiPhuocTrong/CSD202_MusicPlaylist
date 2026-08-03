@@ -14,6 +14,9 @@ public:
     PlaylistManagement();
     ~PlaylistManagement();
 
+    //InputSong
+    Song inputSong();
+    
     // ===== Add =====
     void addFirst();
     void addLast();
@@ -26,7 +29,7 @@ public:
     void deleteById();
 
     // ===== Search =====
-    Node* searchById();
+    Node* searchById() const;
     void searchByTitle();
 
     // ===== Sort =====

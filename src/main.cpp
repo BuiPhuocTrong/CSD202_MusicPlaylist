@@ -34,6 +34,7 @@ bool isRunning = true;
 // Display Main Menu
 void showMenu()
 {
+    clearScreen();
     cout << "\n=========================================\n";
     cout << "        MUSIC PLAYLIST MANAGEMENT\n";
     cout << "=========================================\n";

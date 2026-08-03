@@ -7,7 +7,6 @@
 
 void inputIntegerInRange(int& target, int min, int max, const std::string& prompt);
 std::string inputString(const std::string& prompt);
-Song inputSong();
 void waitEnter();
 
 #endif

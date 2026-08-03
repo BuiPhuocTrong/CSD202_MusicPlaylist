@@ -1,5 +1,7 @@
 #include "../header/ConsoleInput.h"
 #include "../header/Validation.h"
+#include "../header/PlaylistManagement.h"
+#include "../header/Subjects.h"
 
 #include <iostream>
 #include <string>
@@ -47,30 +49,38 @@ string inputString(const string& prompt)
 }
 
 // Input Song
-Song inputSong()
-{
-    string *id = new string;
-    *id = inputString("Song ID: ");
+Song PlaylistManagement::inputSong(){
+    string id;
+    while (true) {
+        id = inputString("Song ID: ");
 
-    string *title = new string;
-    *title = inputString("Title: ");
+        Node* temp = head;
+        
+        while (temp != nullptr) {
+            if (temp->data.getId() == id) {
+                cout << "ID already exists. Please enter a unique ID.\n";
+                break;
+            }
+            temp = temp->next;
+        }
+        if (temp == nullptr) {
+            break;
+        }
+    }
 
-    string *artist = new string;
-    *artist = inputString("Artist: ");
+    // Nhập các thông tin còn lại bằng biến Stack thông thường
+    string title = inputString("Title: ");
+    string artist = inputString("Artist: ");
+    
+    int duration = 0;
+    inputIntegerInRange(duration, 1, 100000, "Duration (seconds): ");
 
-    int *duration = new int;
-    inputIntegerInRange(*duration, 1, 100000, "Duration (seconds): ");
-
+    // Tạo đối tượng Song gọn gàng
     Song song;
-    song.setId(*id);
-    song.setTitle(*title);
-    song.setArtist(*artist);
-    song.setDuration(*duration);
-
-    delete id;
-    delete title;
-    delete artist;
-    delete duration;
+    song.setId(id);
+    song.setTitle(title);
+    song.setArtist(artist);
+    song.setDuration(duration);
 
     return song;
 }
