@@ -1,25 +1,42 @@
-
 #include "../header/ConsoleInput.h"
+#include "../header/PlaylistManagement.h"
 
 #include <iostream>
-
+#include <cstdlib>
+#include <limits>
 using namespace std;
+
 /*
 -class
 -4 data attributes, 1 pointer
 -add, delete, sort, search, update, display
-- have menu
+-have menu
 */
 
-// Recall showMenu() 
-// Handle user input
-// No parameters, no return value
-// Function to display the menu, no parameters, no return value
+#define ASCENDING true
+#define DESCENDING false
 
-bool isRunning = 1;
-void showMenu (){
-    cout << "==============================\n";
-    cout << "MUSIC PLAYLIST MANAGEMENT\n";
+#define A_to_Z true
+#define Z_to_A false
+
+void clearScreen()
+{
+#ifdef _WIN32
+    system("cls");
+#else
+    system("clear");
+#endif
+}
+
+PlaylistManagement playlist;
+bool isRunning = true;
+
+// Display Main Menu
+void showMenu()
+{
+    cout << "\n=========================================\n";
+    cout << "        MUSIC PLAYLIST MANAGEMENT\n";
+    cout << "=========================================\n";
     cout << "1. Add song\n";
     cout << "2. Delete song\n";
     cout << "3. Search song\n";
@@ -27,46 +44,196 @@ void showMenu (){
     cout << "5. Update song information\n";
     cout << "6. Display playlist\n";
     cout << "0. Exit\n";
-    cout << "==============================\n";
+    cout << "=========================================\n";
 }
 
-void loopMenu (){
-    int choice = -1;
-    do {
+// Loop Menu
+void loopMenu(){
+    int choice;
+
+    do{
         showMenu();
-        inputIntegerInRange(choice, 0, 9, "==> Enter your selection: ");
-        switch (choice) {
+
+        inputIntegerInRange(choice, 0, 6, "==> Enter your selection: ");
+
+        switch (choice){
+            // ADD
             case 1:
-                // Add song
+            {
+                int option;
+
+                cout << "\n------ ADD SONG ------\n";
+                cout << "1. Add First\n";
+                cout << "2. Add Last\n";
+                cout << "3. Add At Position\n";
+
+                inputIntegerInRange(option, 1, 3, "Choose: ");
+
+                clearScreen();
+
+                switch (option)
+                {
+                    case 1:
+                        playlist.addFirst();
+                        break;
+                    case 2:
+                        playlist.addLast();
+                        break;
+                    case 3:
+                        playlist.addIndex(playlist.getSize());
+                        break;
+                }
+
                 break;
+            }
+
+            // DELETE
             case 2:
-                // Delete song
+            {
+                int option;
+
+                cout << "\n------ DELETE SONG ------\n";
+                cout << "1. Delete First\n";
+                cout << "2. Delete Last\n";
+                cout << "3. Delete By ID\n";
+                cout << "4. Delete At Position\n";
+
+                inputIntegerInRange(option, 1, 4, "Choose: ");
+                
+                clearScreen();
+
+                switch (option){
+                    case 1:
+                        playlist.deleteFirst();
+                        break;
+
+                    case 2:
+                        playlist.deleteLast();
+                        break;
+
+                    case 3:
+                        playlist.deleteById();
+                        break;
+
+                    case 4:
+                        playlist.deleteIndex(playlist.getSize());
+                        break;
+                }
+
                 break;
+            }
+
+            // SEARCH
             case 3:
-                // Search song
+            {
+                int option;
+
+                cout << "\n------ SEARCH SONG ------\n";
+                cout << "1. Search By ID\n";
+                cout << "2. Search By Title\n";
+
+                inputIntegerInRange(option, 1, 2, "Choose: ");
+
+                clearScreen();
+
+                if (option == 1){
+                    Node* result = playlist.searchById();
+
+                    if (result == nullptr){
+                        cout << "Song not found.\n";
+                    }
+                    else{
+                        result->data.display();
+                    }
+                }
+                else{
+                    playlist.searchByTitle();
+                }
+
                 break;
+            }
+
+            // SORT
             case 4:
-                // Sort playlist
+{
+                int option;
+
+                cout << "\n------ SORT PLAYLIST ------\n";
+                cout << "1. Duration Ascending\n";
+                cout << "2. Duration Descending\n";
+                cout << "3. Title A-Z\n";
+                cout << "4. Title Z-A\n";
+
+                inputIntegerInRange(
+                    option, 1, 4, "Choose: ");
+
+                clearScreen();    
+                switch (option){
+                case 1:
+                    playlist.sortDuration(ASCENDING);
+                    break;
+
+                case 2:
+                    playlist.sortDuration(DESCENDING);
+                    break;
+
+                case 3:
+                    playlist.sortTitle(A_to_Z);
+                    break;
+
+                case 4:
+                    playlist.sortTitle(Z_to_A);
+                    break;
+                }
+
                 break;
+            }
+
+            //=========================
+            // UPDATE
+            //=========================
             case 5:
-                // Update song information
+            {
+                clearScreen();
+                playlist.updateSong();
+
                 break;
+            }
+
+            //=========================
+            // DISPLAY
+            //=========================
             case 6:
-                // Display playlist
+            {
+                clearScreen();
+                playlist.displayPlaylist();
                 break;
+            }
+
+            //=========================
+            // EXIT
+            //=========================
             case 0:
+            {
                 isRunning = false;
-                cout << "Exiting the program.\n";
+                cout << "Exiting the program...\n";
                 break;
+            }
+
             default:
-                cout << "Invalid choice. Please try again.\n";
+                cout << "Invalid choice.\n";
         }
+
     } while (isRunning);
 }
 
+// ======================
+// Main
+// ======================
 
-
-int main (){
+int main()
+{
+    clearScreen();
     loopMenu();
     return 0;
 }
