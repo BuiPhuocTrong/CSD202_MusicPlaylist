@@ -145,6 +145,7 @@ void loopMenu(){
                     }
                     else{
                         result->data.display();
+                        waitEnter();
                     }
                 }
                 else{

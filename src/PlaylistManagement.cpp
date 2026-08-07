@@ -254,9 +254,7 @@ void PlaylistManagement::searchByTitle() {
         return;
     }
 
-    string temp;
-    cout << "Enter title to search: ";
-    getline(cin, temp);
+    string temp = inputString("Enter title to search: ");
 
     if (temp.empty()) {
         cout << "Title cannot be empty.\n";
