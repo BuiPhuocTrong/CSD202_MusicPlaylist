@@ -57,6 +57,7 @@ void PlaylistManagement::addFirst()
     }
 
     cout << "Song added successfully.\n";
+    waitEnter();
 }
 
 // Add last, O(1)
@@ -75,6 +76,7 @@ void PlaylistManagement::addLast()
     }
 
     cout << "Song added successfully.\n";
+    waitEnter();
 }
 
 // Add at position, position starts from 0
@@ -113,6 +115,7 @@ void PlaylistManagement::addIndex(int size)
 void PlaylistManagement::deleteFirst(){
     if (isEmpty()){
         cout << "Playlist is empty.\n";
+        waitEnter();
         return;
     }
 
@@ -121,6 +124,7 @@ void PlaylistManagement::deleteFirst(){
     delete temp;
 
     cout << "Delete successfully.\n";
+    waitEnter();
 }
 
 // Delete last
@@ -227,6 +231,7 @@ Node* PlaylistManagement::searchById() const{
         }
         current = current->next;
     }
+    waitEnter();
 
     return nullptr;
 }
@@ -254,7 +259,9 @@ void PlaylistManagement::searchByTitle() {
         return;
     }
 
-    string temp = inputString("Enter title to search: ");
+    string temp;
+    cout << "Enter title to search: ";
+    getline(cin, temp);
 
     if (temp.empty()) {
         cout << "Title cannot be empty.\n";
@@ -390,8 +397,9 @@ void PlaylistManagement::sortDuration(bool state)
         }
     }
 
-    cout << "Playlist sorted successfully (" 
+    cout << "Playlist sorted fully (" 
          << (state ? "Duration Ascending" : "Duration Descending") << ").\n";
+         waitEnter();
 }
 
 // Sort by Title, A-Z or Z-A
@@ -415,4 +423,5 @@ void PlaylistManagement::sortTitle(bool state)
 
     cout << "Playlist sorted successfully (" 
          << (state ? "Title A-Z" : "Title Z-A") << ").\n";
+         waitEnter();
 }

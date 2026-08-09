@@ -7,16 +7,20 @@
 #include <string>
 
 using namespace std;
+int choice;
 
-//Input integer
-void inputIntegerInRange(int& target, int min, int max, const string& prompt) {
+// Input integer
+void inputIntegerInRange(int &target, int min, int max, const string &prompt)
+{
     string input;
 
-    while (true) {
+    while (true)
+    {
         cout << prompt;
-        getline(cin, input);
+        getline(cin,input);
 
-        if (!isIntegerBelongRange(input, min, max)) {
+        if (!isIntegerBelongRange(input, min, max))
+        {
             cout << "Only enter a number from "
                  << min << " to " << max << "." << endl;
             continue;
@@ -27,10 +31,13 @@ void inputIntegerInRange(int& target, int min, int max, const string& prompt) {
     }
 }
 
-//Input string
-//Enter prompt, return input from user
-string inputString(const string& prompt)
+// Input string 
+// Enter prompt, return input from user
+string inputString(const string &prompt)
 {
+    
+
+
     string input;
 
     while (true)
@@ -49,21 +56,26 @@ string inputString(const string& prompt)
 }
 
 // Input Song
-Song PlaylistManagement::inputSong(){
+Song PlaylistManagement::inputSong()
+{
     string id;
-    while (true) {
+    while (true)
+    {
         id = inputString("Song ID: ");
 
-        Node* temp = head;
-        
-        while (temp != nullptr) {
-            if (temp->data.getId() == id) {
+        Node *temp = head;
+
+        while (temp != nullptr)
+        {
+            if (temp->data.getId() == id)
+            {
                 cout << "ID already exists. Please enter a unique ID.\n";
                 break;
             }
             temp = temp->next;
         }
-        if (temp == nullptr) {
+        if (temp == nullptr)
+        {
             break;
         }
     }
@@ -71,7 +83,7 @@ Song PlaylistManagement::inputSong(){
     // Nhập các thông tin còn lại bằng biến Stack thông thường
     string title = inputString("Title: ");
     string artist = inputString("Artist: ");
-    
+
     int duration = 0;
     inputIntegerInRange(duration, 1, 100000, "Duration (seconds): ");
 
@@ -85,7 +97,41 @@ Song PlaylistManagement::inputSong(){
     return song;
 }
 
-void waitEnter(){
+void waitEnter()
+{
     cout << "\nPress Enter to back...";
     cin.get();
+}
+bool inputIntegerWithQuit(int &number, const std::string &prompt)
+{
+    string input;
+
+    while (true)
+    {
+        cout << prompt;
+        cin.clear();
+        //cin >> input;
+        getline(cin, input);
+
+        if (input == "q")
+        {
+            return true;
+        }
+        try
+        {
+            size_t idx;
+            int temp = stoi(input, &idx);
+            if (idx == input.length())
+            {
+                number= temp;
+                return false;
+            }
+        }
+        catch (...)
+        {
+
+            cout << "Invalid input. Please enter a valid integer or 'q' to quit.\n";
+            continue;
+        }
+    }
 }

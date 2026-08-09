@@ -8,5 +8,6 @@
 void inputIntegerInRange(int& target, int min, int max, const std::string& prompt);
 std::string inputString(const std::string& prompt);
 void waitEnter();
+bool inputIntegerWithQuit(int &number, const std::string& prompt);
 
 #endif

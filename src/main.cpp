@@ -49,181 +49,224 @@ void showMenu()
 }
 
 // Loop Menu
-void loopMenu(){
+void loopMenu()
+{
     int choice;
 
-    do{
+    do
+    {
         showMenu();
 
         inputIntegerInRange(choice, 0, 6, "==> Enter your selection: ");
 
-        switch (choice){
-            // ADD
-            case 1:
-            {
-                int option;
+        switch (choice)
+        {
+        // ADD
+        case 1:
+        {
+            int option;
 
-                cout << "\n------ ADD SONG ------\n";
-                cout << "1. Add First\n";
-                cout << "2. Add Last\n";
-                cout << "3. Add At Position\n";
-
-                inputIntegerInRange(option, 1, 3, "Choose: ");
-
-                clearScreen();
-
-                switch (option)
+            cout << "\n------ ADD SONG ------\n";
+            cout << "1. Add First\n";
+            cout << "2. Add Last\n";
+            cout << "3. Add At Position\n";
+            while (true){
+               
+                if (inputIntegerWithQuit(option, "Choose (or 'q' to quit): "))
                 {
-                    case 1:
-                        playlist.addFirst();
-                        break;
-                    case 2:
-                        playlist.addLast();
-                        break;
-                    case 3:
-                        playlist.addIndex(playlist.getSize());
-                        break;
+                    break; // Exit if user chooses to quit
                 }
-
-                break;
+                else if (option >= 1 && option <= 3)
+                {
+                    break; // Valid option, exit loop
+                }
+                else
+                {
+                    cout << "Invalid option. Please choose a valid option.\n";
+                }
+               
             }
 
-            // DELETE
+            // if (inputIntegerWithQuit(option, "Choose (or 'q' to quit): "))
+            // {
+            //     break; // Exit if user chooses to quit
+            // }
+            //  else {
+            //     cout << "Invalid option. Please choose a valid option.\n";
+            //     break;
+            // }
+
+            clearScreen();
+
+            switch (option)
+            {
+            case 1:
+                playlist.addFirst();
+                break;
             case 2:
-            {
-                int option;
-
-                cout << "\n------ DELETE SONG ------\n";
-                cout << "1. Delete First\n";
-                cout << "2. Delete Last\n";
-                cout << "3. Delete By ID\n";
-                cout << "4. Delete At Position\n";
-
-                inputIntegerInRange(option, 1, 4, "Choose: ");
-                
-                clearScreen();
-
-                switch (option){
-                    case 1:
-                        playlist.deleteFirst();
-                        break;
-
-                    case 2:
-                        playlist.deleteLast();
-                        break;
-
-                    case 3:
-                        playlist.deleteById();
-                        break;
-
-                    case 4:
-                        playlist.deleteIndex(playlist.getSize());
-                        break;
-                }
-
+                playlist.addLast();
                 break;
-            }
-
-            // SEARCH
             case 3:
-            {
-                int option;
-
-                cout << "\n------ SEARCH SONG ------\n";
-                cout << "1. Search By ID\n";
-                cout << "2. Search By Title\n";
-
-                inputIntegerInRange(option, 1, 2, "Choose: ");
-
-                clearScreen();
-
-                if (option == 1){
-                    Node* result = playlist.searchById();
-
-                    if (result == nullptr){
-                        cout << "Song not found.\n";
-                    }
-                    else{
-                        result->data.display();
-                        waitEnter();
-                    }
-                }
-                else{
-                    playlist.searchByTitle();
-                }
-
+                playlist.addIndex(playlist.getSize());
                 break;
             }
 
-            // SORT
+            break;
+        }
+
+        // DELETE
+        case 2:
+        {
+            int option;
+
+            cout << "\n------ DELETE SONG ------\n";
+            cout << "1. Delete First\n";
+            cout << "2. Delete Last\n";
+            cout << "3. Delete By ID\n";
+            cout << "4. Delete At Position\n";
+
+            if (inputIntegerWithQuit(option, "Choose(or 'q' to quit): "))
+            {
+                break;
+            }
+
+            clearScreen();
+
+            switch (option)
+            {
+            case 1:
+                playlist.deleteFirst();
+                break;
+
+            case 2:
+                playlist.deleteLast();
+                break;
+
+            case 3:
+                playlist.deleteById();
+                break;
+
             case 4:
-{
-                int option;
-
-                cout << "\n------ SORT PLAYLIST ------\n";
-                cout << "1. Duration Ascending\n";
-                cout << "2. Duration Descending\n";
-                cout << "3. Title A-Z\n";
-                cout << "4. Title Z-A\n";
-
-                inputIntegerInRange(
-                    option, 1, 4, "Choose: ");
-
-                clearScreen();    
-                switch (option){
-                case 1:
-                    playlist.sortDuration(ASCENDING);
-                    break;
-
-                case 2:
-                    playlist.sortDuration(DESCENDING);
-                    break;
-
-                case 3:
-                    playlist.sortTitle(A_to_Z);
-                    break;
-
-                case 4:
-                    playlist.sortTitle(Z_to_A);
-                    break;
-                }
-
+                playlist.deleteIndex(playlist.getSize());
                 break;
-            }
-
-            //=========================
-            // UPDATE
-            //=========================
-            case 5:
-            {
-                clearScreen();
-                playlist.updateSong();
-
-                break;
-            }
-
-            //=========================
-            // DISPLAY
-            //=========================
-            case 6:
-            {
-                clearScreen();
-                playlist.displayPlaylist();
-                break;
-            }
-
-            //=========================
-            // EXIT
-            //=========================
-            case 0:
-            {
-                isRunning = false;
-                cout << "Exiting the program...\n";
-                break;
-            }
-
             default:
-                cout << "Invalid choice.\n";
+                cout << "Invalid option.\n";
+            }
+
+            break;
+        }
+
+        // SEARCH
+        case 3:
+        {
+            int option;
+
+            cout << "\n------ SEARCH SONG ------\n";
+            cout << "1. Search By ID\n";
+            cout << "2. Search By Title\n";
+
+            if (inputIntegerWithQuit(option, "Choose(or 'q' to quit): "))
+            {
+                break;
+            }
+
+            clearScreen();
+
+            if (option == 1)
+            {
+                Node *result = playlist.searchById();
+
+                if (result == nullptr)
+                {
+                    cout << "Song not found.\n";
+                }
+                else
+                {
+                    result->data.display();
+                }
+                waitEnter();
+            }
+            else
+            {
+                playlist.searchByTitle();
+            }
+
+            break;
+        }
+
+        // SORT
+        case 4:
+        {
+            int option;
+
+            cout << "\n------ SORT PLAYLIST ------\n";
+            cout << "1. Duration Ascending\n";
+            cout << "2. Duration Descending\n";
+            cout << "3. Title A-Z\n";
+            cout << "4. Title Z-A\n";
+
+            if (inputIntegerWithQuit(option, "Choose(or 'q' to quit): "))
+            {
+                break;
+            }
+
+            clearScreen();
+            switch (option)
+            {
+            case 1:
+                playlist.sortDuration(ASCENDING);
+                break;
+
+            case 2:
+                playlist.sortDuration(DESCENDING);
+                break;
+
+            case 3:
+                playlist.sortTitle(A_to_Z);
+                break;
+
+            case 4:
+                playlist.sortTitle(Z_to_A);
+                break;
+            }
+
+            break;
+        }
+        
+
+        //=========================
+        // UPDATE
+        //=========================
+        case 5:
+    
+            clearScreen();
+            playlist.updateSong();
+
+            break;
+        
+
+        //=========================
+        // DISPLAY
+        //=========================
+        case 6:
+       
+            clearScreen();
+            playlist.displayPlaylist();
+            break;
+        
+
+        //=========================
+        // EXIT
+        //=========================
+        case 0:
+        {
+            isRunning = false;
+            cout << "Exiting the program...\n";
+            break;
+        }
+
+        default:
+            cout << "Invalid choice.\n";
         }
 
     } while (isRunning);
